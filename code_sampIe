@@ -1,0 +1,37 @@
+Extracting multiple root domains from a CSV using print
+
+from tld import get_tld
+ 
+urls_file = "urls_file.csv"
+#URLs should be in column A without a heading, in a CSV file named "urls_file.csv"
+ 
+urls = [line.rstrip('\n') for line in open(urls_file)]
+ 
+for url in urls:
+    res = get_tld(url,as_object=True)
+    print(res.fld)
+This script also works with .txt files.
+
+Extracting multiple root domains from a CSV to a CSV
+
+from tld import get_tld
+ 
+urls_file = "urls_file.csv"
+#URLs should be in column A without a heading, in a CSV file named "urls_file.csv"
+ 
+urls = [line.rstrip('\n') for line in open(urls_file)]
+the_file = open("domains.csv", "w")
+#Create a CSV file within the same file directory and name "domains.csv"
+ 
+the_file.write("root domain, urls \n")
+for url in urls:
+    the_list = []
+    result = get_tld(url,as_object=True).fld
+    try:
+        root_domain = the_list.append(result)
+    except:
+        the_list.append("NO ROOT")
+    url = the_list.append(url)
+    the_list.append("\n")
+    the_file.write(",".join(the_list))
+the_file.close
